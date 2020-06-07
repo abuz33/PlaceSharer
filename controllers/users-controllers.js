@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 
 const HttpError = require("../models/http-error");
 const User = require("../models/user");
+const Place = require("../models/place");
 
 const getUsers = async (req, res, next) => {
   let users;
@@ -161,6 +162,32 @@ const login = async (req, res, next) => {
   });
 };
 
+const searchUsers = async (req, res, next) => {
+  let users;
+  let places;
+  try {
+    users = await User.find(
+      { name: { $regex: "^" + req.query.q } },
+      "-password"
+    );
+    places = await Place.find({
+      title: { $regex: "^" + req.query.q },
+    });
+  } catch (err) {
+    console.log(err);
+    const error = new HttpError(
+      "Fetching users, places failed, please try again later.",
+      500
+    );
+    return next(error);
+  }
+  res.json({
+    users: users.map((user) => user.toObject({ getters: true })),
+    places: places.map((place) => place.toObject({ getters: true })),
+  });
+};
+
 exports.getUsers = getUsers;
 exports.signup = signup;
 exports.login = login;
+exports.searchUsers = searchUsers;
