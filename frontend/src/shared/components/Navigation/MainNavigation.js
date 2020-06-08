@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import MainHeader from './MainHeader';
+import SearchBar from './SearchBar';
 import NavLinks from './NavLinks';
 import SideDrawer from './SideDrawer';
 import Backdrop from '../UIElements/Backdrop';
 import './MainNavigation.css';
 
-const MainNavigation = props => {
+const MainNavigation = (props) => {
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
 
   const openDrawerHandler = () => {
@@ -28,10 +29,7 @@ const MainNavigation = props => {
       </SideDrawer>
 
       <MainHeader>
-        <button
-          className="main-navigation__menu-btn"
-          onClick={openDrawerHandler}
-        >
+        <button className="main-navigation__menu-btn" onClick={openDrawerHandler}>
           <span />
           <span />
           <span />
@@ -40,6 +38,7 @@ const MainNavigation = props => {
           <Link to="/">YourPlaces</Link>
         </h1>
         <nav className="main-navigation__header-nav">
+          <SearchBar />
           <NavLinks />
         </nav>
       </MainHeader>
