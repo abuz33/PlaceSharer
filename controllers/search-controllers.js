@@ -6,9 +6,18 @@ const searchUsersPlaces = async (req, res, next) => {
   let users;
   let places;
   try {
-    users = await User.find({ name: { $regex: req.query.q } }, "-password");
+    users = await User.find({
+      $or: [
+        { name: { $regex: req.query.q, $options: "i" } },
+        { email: { $regex: req.query.q, $options: "i" } },
+      ],
+    });
+
     places = await Place.find({
-      title: { $regex: req.query.q },
+      $or: [
+        { title: { $regex: req.query.q, $options: "i" } },
+        { address: { $regex: req.query.q, $options: "i" } },
+      ],
     });
   } catch (err) {
     const error = new HttpError(
