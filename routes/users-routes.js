@@ -8,8 +8,6 @@ const router = express.Router();
 
 router.get("/", usersController.getUsers);
 
-router.get("/search", usersController.searchUsers);
-
 router.post(
   "/signup",
   fileUpload.single("image"),
