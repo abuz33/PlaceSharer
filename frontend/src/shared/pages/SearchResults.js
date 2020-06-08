@@ -16,7 +16,7 @@ const SearchResults = (props) => {
     const fetchResults = async () => {
       try {
         const responseData = await sendRequest(
-          `${process.env.REACT_APP_BACKEND_URL}/users/search?q=${searchInput}`,
+          `${process.env.REACT_APP_BACKEND_URL}/search?q=${searchInput}`,
         );
 
         setUsers(await responseData.users);
