@@ -19,6 +19,7 @@
 
 .main-navigation__title {
   color: white;
+  flex: 2;
 }
 
 .main-navigation__title a {
