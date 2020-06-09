@@ -9,14 +9,20 @@ import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import { AuthContext } from "../../shared/context/auth-context";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import "./PlaceItem.css";
+import ReviewList from "./ReviewList";
 
 const PlaceItem = (props) => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const auth = useContext(AuthContext);
   const [showMap, setShowMap] = useState(false);
+  const [showReviews, setShowReviews] = useState(false);
+
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const openMapHandler = () => setShowMap(true);
+  const openReviews = () => setShowReviews(true);
+  const closeReviews = () => setShowReviews(false);
+
 
   const closeMapHandler = () => setShowMap(false);
 
@@ -59,6 +65,16 @@ const PlaceItem = (props) => {
         </div>
       </Modal>
       <Modal
+        show={showReviews}
+        onCancel={closeReviews}
+        header={"Reviews"}
+        footer={<Button onClick={closeReviews}>CLOSE</Button>}
+      >
+        <div className="map-container">
+          <ReviewList/>
+        </div>
+      </Modal>
+      <Modal
         show={showConfirmModal}
         onCancel={cancelDeleteHandler}
         header="Are you sure?"
@@ -96,6 +112,9 @@ const PlaceItem = (props) => {
           <div className="place-item__actions">
             <Button inverse onClick={openMapHandler}>
               VIEW ON MAP
+            </Button>
+            <Button onClick={openReviews}>
+              REVIEWS
             </Button>
             {auth.userId === props.creatorId && (
               <Button to={`/places/${props.id}`}>EDIT</Button>
