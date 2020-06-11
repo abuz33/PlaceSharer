@@ -103,10 +103,6 @@ const updateReview = async (req, res, next) => {
 
 const deleteReview = async (req, res, next) => {
 	const reviewId = req.params.reviewid;
-	console.log("deleteReview -> reviewId", reviewId)
-    console.log("deleteReview -> uuuuu", req.body)
-	
-  
 	
 	let reviewToDelete;
 	try {
@@ -123,14 +119,6 @@ const deleteReview = async (req, res, next) => {
 	  const error = new HttpError('Could not find review for this id.', 404);
 	  return next(error);
 	}
-  
-	if(review.creator !== req.userData.userId){
-		const error = new HttpError(
-			'You are not allowed to delete this place.',
-			401
-		  );
-		  return next(error);
-	}
 
 	try {
 		const sess = await mongoose.startSession();
@@ -139,14 +127,11 @@ const deleteReview = async (req, res, next) => {
 		await sess.commitTransaction();
 	  } catch (err) {
 		const error = new HttpError(
-		  'Something went wrong, could not delete place.',
+		  'Something went wrong, could not delete review.',
 		  500
 		);
 		return next(error);
 	  }
-
-
-
 
 	res.status(200).json({ message: 'Deleted review.' });
   };

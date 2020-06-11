@@ -1,4 +1,4 @@
-img {
+.userImage {
 	width: 20px;
 }
 .review {
@@ -14,6 +14,7 @@ img {
 }
 #closeButton {
 	margin: 10px;
+	width: 20px; 
 }
 #closeButton:hover {
 	transform:scale(1.3, 1.3) ;

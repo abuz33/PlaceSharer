@@ -15,12 +15,13 @@ import './ReviewList.css';
 
 function ReviewList(props) {
 	const auth = useContext(AuthContext);
+    console.log("ReviewList -> auth", auth)
+	
 	const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
 	const userId = useParams().userId;
 	const placeId = props.placeId;
 	const [ reviews, setReviews ] = useState();
-	const [ warningDeleteReview, setWarningDeleteReview ] = useState(false);
 
 	const [ formState, inputHandler, setFormData ] = useForm(
 		{
@@ -46,9 +47,6 @@ function ReviewList(props) {
 		fetchReviews();
 	  }, [sendRequest, formState, placeId]);
 
-	  const cancelDeleteHandler=()=>{
-		  setWarningDeleteReview(false)
-	  }
 	const reviewSubmitHandler = async (event) => {
 		event.preventDefault();
 		const reviewDate = new Date();
@@ -67,39 +65,19 @@ function ReviewList(props) {
 		} catch (err) {}
 		setFormData({review: { value: '', isValid: false}})
 	};
-
-	const showWarning=()=>{
-		setWarningDeleteReview(true)
-	}
 	const deleteReview = (deletedReviewId)=>{
 		setReviews((prevReview) =>
 		prevReview.filter((review) => review.id !== deletedReviewId));
-		setWarningDeleteReview(false)
 	}
 
 	return (
 		<React.Fragment>
 			<ErrorModal error={error} onClear={clearError} />
+			<img className="place-photo"src={props.placeUrl} alt={"the place "}/> 
 			{reviews && reviews.map((review) => (
-				<Review id={review.id} deleteReview={showWarning} image={review.userImg} reviewBody={review.reviewTxt} userName={review.creator} />
+				<Review id={review.id} deleteReview={deleteReview} image={review.userImg} reviewBody={review.reviewTxt} userName={review.creator} />
 			))}
 			{isLoading && <LoadingSpinner asOverlay />}
-			<Modal
-				show={warningDeleteReview}
-				onCancel={cancelDeleteHandler}
-				header="Are you sure?"
-				footerClass="place-item__modal-actions"
-				footer={
-					<React.Fragment>
-						<Button inverse onClick={cancelDeleteHandler}>
-							CANCEL
-						</Button>
-						<Button danger onClick={deleteReview}>
-							DELETE
-						</Button>
-					</React.Fragment>
-				}
-			></Modal>
 			{auth.isLoggedIn && (
 				<form onSubmit={reviewSubmitHandler}>
 					<Input
