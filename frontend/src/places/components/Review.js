@@ -1,19 +1,15 @@
 import React from 'react';
-
+import './Review.css';
 function Review(props) {
-    return (
-        <React.Fragment> 
-        <div>
-            <img src={props.image} style={{width :"100px"}}alt={'Some photo'}/>
-        </div>
-        <div>
-            <h4>{props.userName}</h4>
-        </div>
-        <div>
-            <p>{props.reviewBody}</p>
-        </div>
-        </React.Fragment>
-    )
+	return (
+		<React.Fragment>
+			<div className="review">
+				<img src={props.image || 'https://bit.ly/3f7YYNi'} alt={'Some photo'} />
+				<p className="userName"> {`${props.userName}:`}</p>
+				<p className="reviewBody"> {props.reviewBody} </p>
+			</div>
+		</React.Fragment>
+	);
 }
 
 export default Review;
