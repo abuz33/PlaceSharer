@@ -4,10 +4,13 @@ const uniqueValidator = require('mongoose-unique-validator');
 const Schema = mongoose.Schema;
 
 const reviewSchema = new Schema({
+  date: {  type: String, required: true},
   creator: {  type: String, required: true},
   reviewTxt: { type: String, required: true, minlength: 6 },
-  place: { type: String, required: true }
+  placeId: { type: String, required: true }
 });
+
+
 
 reviewSchema.plugin(uniqueValidator);
 

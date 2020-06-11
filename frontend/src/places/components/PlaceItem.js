@@ -59,13 +59,14 @@ const PlaceItem = (props) => {
 				</div>
 			</Modal>
 			<Modal
+				className = "reviewsModal"
 				show={showReviews}
 				onCancel={closeReviews}
 				header={'Reviews'}
-				footer={<Button onClick={closeReviews}>CLOSE</Button>}
+				// footer={<Button onClick={closeReviews}>CLOSE</Button>}
 			>
-				<div className="map-container">
-					<ReviewList />
+				<div>
+					<ReviewList placeId={props.id} className='review-list' />
 				</div>
 			</Modal>
 			<Modal
