@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 
 const placesRoutes = require("./routes/places-routes");
 const usersRoutes = require("./routes/users-routes");
+const reviewsRoutes = require("./routes/reviews-routes");
 const HttpError = require("./models/http-error");
 
 const app = express();
@@ -28,6 +29,7 @@ app.use((req, res, next) => {
 
 app.use("/api/places", placesRoutes);
 app.use("/api/users", usersRoutes);
+app.use("/api/reviews", reviewsRoutes);
 
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route.", 404);
@@ -49,7 +51,8 @@ app.use((error, req, res, next) => {
 
 mongoose
   .connect(
-    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0-gb9s6.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
+    // `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0-gb9s6.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
+    'mongodb+srv://HYF-Ammar:HYF_ammar_HYF1234@cluster0-ptw2q.azure.mongodb.net/mern?retryWrites=true&w=majority', { useNewUrlParser: true }
   )
   .then(() => {
     app.listen(5000);

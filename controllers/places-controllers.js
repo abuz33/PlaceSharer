@@ -88,6 +88,7 @@ const createPlace = async (req, res, next) => {
     creator: req.userData.userId
   });
 
+
   let user;
   try {
     user = await User.findById(req.userData.userId);
