@@ -1,0 +1,23 @@
+img {
+	width: 20px;
+}
+.review {
+	display: flex;
+	align-items: center;
+	margin: 0 5px;
+}
+
+.userName {
+	margin-left: 5px;
+	overflow: circle;
+}
+
+.reviewBody {
+	background-color: #eee;
+	border-bottom: 1px solid;
+	border-radius: 8px;
+	margin-left: 5px;
+	padding: 5px;
+	overflow: circle;
+	text-align: justify;
+}
