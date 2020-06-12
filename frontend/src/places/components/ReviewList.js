@@ -15,7 +15,7 @@ import './ReviewList.css';
 function ReviewList(props) {
 	const auth = useContext(AuthContext);
 	const { isLoading, error, sendRequest, clearError } = useHttpClient();
-	const inputRef= useRef(null);
+
 
 	const userId = useParams().userId;
 	const placeId = props.placeId;
@@ -38,15 +38,16 @@ function ReviewList(props) {
 			const fetchReviews = async () => {
 				try {
 					const responseData = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}/reviews/${placeId}`);
-
 					setReviews(responseData.reviews);
 				} catch (err) {}
 			};
 			fetchReviews();
 		},
-		[ sendRequest, placeId, updateReviews ]
+		[ sendRequest, placeId ]
 	);
 
+	
+	
 	const reviewSubmitHandler = async (event) => {
 		event.preventDefault();
 		const reviewDate = new Date();
@@ -56,7 +57,7 @@ function ReviewList(props) {
 				'POST',
 				JSON.stringify({
 					date: reviewDate,
-					creator: userId,
+					userId: userId,
 					placeId: placeId,
 					reviewTxt: formState.inputs.review.value
 				}),
@@ -92,8 +93,9 @@ function ReviewList(props) {
 						deleteReview={deleteReview}
 						image={review.userImg}
 						reviewBody={review.reviewTxt}
-						userName={review.creator}
+						userName={review.userId}
 						date={review.date}
+						creator={review.creator}
 					/>
 				))}
 			{isLoading && <LoadingSpinner asOverlay />}
