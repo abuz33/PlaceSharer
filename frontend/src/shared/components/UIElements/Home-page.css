@@ -23,8 +23,7 @@ h1 {
   margin-bottom: 30px;
 }
 p {
-  font-size: 25px;
-  font-weight: 600;
+  font-size: 20px;
   padding-left: 20px;
 }
 .home-container__avatarImg {
@@ -36,7 +35,7 @@ p {
 @media (max-width: 375px) {
   .home-container {
     width: 300px;
-    margin-left: 10px;
+    margin-left: 15px;
     margin-top: 0px;
   }
   h1 {
