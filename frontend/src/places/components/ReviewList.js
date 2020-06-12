@@ -14,6 +14,7 @@ import './ReviewList.css';
 
 function ReviewList(props) {
 	const auth = useContext(AuthContext);
+
 	const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
 	const userId = auth.userId;
@@ -42,7 +43,7 @@ function ReviewList(props) {
 			};
 			fetchReviews();
 		},
-		[ sendRequest, placeId ]
+		[ sendRequest, placeId, updateReviews ]
 	);
 
 	const reviewSubmitHandler = async (event) => {
