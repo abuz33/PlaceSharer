@@ -1,11 +1,11 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import { AuthContext } from '../../shared/context/auth-context';
 import close from '../../shared/components/UIElements/icons/close.png';
 import './Review.css';
 
 function Review(props) {
 	const auth = useContext(AuthContext);
-
+	console.log(props.creator);
 	return (
 		<React.Fragment>
 			<div className="review">
@@ -13,8 +13,19 @@ function Review(props) {
 				<p className="userName"> {props.userName}</p>
 
 				<p className="reviewBody"> {props.reviewBody} </p>
-				
-				{auth.isLoggedIn && <img id="closeButton" src={close} alt={'X'} onClick={()=>{props.deleteReview(props.id)}}/>}
+
+				{auth.isLoggedIn && auth.userId === props.creator ? (
+					<img
+						id="closeButton"
+						src={close}
+						alt={'X'}
+						onClick={() => {
+							props.deleteReview(props.id);
+						}}
+					/>
+				) : (
+					''
+				)}
 			</div>
 		</React.Fragment>
 	);

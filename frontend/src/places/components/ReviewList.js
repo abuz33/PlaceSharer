@@ -15,7 +15,7 @@ import './ReviewList.css';
 function ReviewList(props) {
 	const auth = useContext(AuthContext);
 	const { isLoading, error, sendRequest, clearError } = useHttpClient();
-	const inputRef= useRef(null);
+	const inputRef = useRef(null);
 
 	const userId = useParams().userId;
 	const placeId = props.placeId;
@@ -69,7 +69,7 @@ function ReviewList(props) {
 		setUpdateReviews(1);
 		setFormData({ review: { value: '', isValid: false } });
 	};
-	
+
 	const deleteReview = async (deletedReviewId) => {
 		setReviews((prevReview) => prevReview.filter((review) => review.id !== deletedReviewId));
 		try {
@@ -83,7 +83,13 @@ function ReviewList(props) {
 		<React.Fragment>
 			<ErrorModal error={error} onClear={clearError} />
 			<img className="place-photo" src={props.placeUrl} alt={'the place '} />
-			{reviews? reviews.length === 0 && <p><strong>No reviews yet. Be the first to review! </strong></p>: null }
+			{reviews ? (
+				reviews.length === 0 && (
+					<p>
+						<strong>No reviews yet. Be the first to review! </strong>
+					</p>
+				)
+			) : null}
 			{reviews &&
 				reviews.map((review) => (
 					<Review
@@ -94,6 +100,7 @@ function ReviewList(props) {
 						reviewBody={review.reviewTxt}
 						userName={review.creator}
 						date={review.date}
+						creator={review.creator}
 					/>
 				))}
 			{isLoading && <LoadingSpinner asOverlay />}
