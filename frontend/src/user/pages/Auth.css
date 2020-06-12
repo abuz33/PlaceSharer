@@ -4,12 +4,24 @@
 }
 
 .authentication {
+  float: right;
   width: 90%;
   max-width: 25rem;
-  margin: 7rem auto;
+  margin: 0rem 7rem ;
   text-align: center;
 }
 
 .authentication form {
   margin-bottom: 1rem;
+}
+
+@media (max-width:375px){
+
+  .authentication {
+    max-width: 15rem;
+    margin: 1.25rem 4rem ;
+}
+  
+
+
 }
