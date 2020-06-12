@@ -68,7 +68,7 @@ function ReviewList(props) {
 		setUpdateReviews(1);
 		setFormData({ review: { value: '', isValid: false } });
 	};
-	console.log(reviews);
+	console.log(`hello sdfsfs`, reviews);
 
 	const deleteReview = async (deletedReviewId) => {
 		setReviews((prevReview) => prevReview.filter((review) => review.id !== deletedReviewId));
@@ -96,11 +96,12 @@ function ReviewList(props) {
 						key={review.id}
 						id={review.id}
 						deleteReview={deleteReview}
-						image={review.userImg}
+						image={review.creator.image}
 						reviewBody={review.reviewTxt}
-						userName={review.userId}
+						userName={review.creator.name}
 						date={review.date}
 						creator={review.userId}
+						time={review.date}
 					/>
 				))}
 			{isLoading && <LoadingSpinner asOverlay />}

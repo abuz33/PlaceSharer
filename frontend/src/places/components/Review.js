@@ -1,18 +1,20 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../../shared/context/auth-context';
 import close from '../../shared/components/UIElements/icons/close.png';
+
 import './Review.css';
 
 function Review(props) {
 	const auth = useContext(AuthContext);
-	console.log('hello', auth.userId, props.creator);
+
 	return (
 		<React.Fragment>
 			<div className="review">
-				<img className="userImage" src={props.creator.image || 'https://bit.ly/3f7YYNi'} alt={'user'} />
-				<p className="userName"> {props.creator ? props.creator.name : null}</p>
+				<img className="userImage" src={props.image || 'https://bit.ly/3f7YYNi'} alt={'user'} />
+				<p className="userName"> {props.creator ? props.userName : null}</p>
 
 				<p className="reviewBody"> {props.reviewBody} </p>
+				<time>{props.time}</time>
 
 				{auth.userId === props.creator ? (
 					<img
