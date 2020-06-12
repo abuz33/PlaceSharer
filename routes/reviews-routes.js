@@ -9,7 +9,7 @@ router.get('/:pid', reviewsController.getReviewsByPlaceId);
 
 router.post('/newReview', [ check('reviewTxt').isLength({ min: 5 }) ], reviewsController.createReview);
 
-router.delete('/:reviewid', reviewsController.deleteReview);
+router.delete('/:reviewid/:userId', reviewsController.deleteReview);
 
 router.patch(
   '/:reviewid',

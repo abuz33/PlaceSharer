@@ -1,11 +1,14 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../../shared/context/auth-context';
+import Moment from 'react-moment';
 import close from '../../shared/components/UIElements/icons/close.png';
 import './Review.css';
 
 function Review(props) {
 	const auth = useContext(AuthContext);
-	console.log('hello', auth.userId, props.creator);
+	const date = props.date;
+	console.log('Review -> date', date);
+
 	return (
 		<React.Fragment>
 			<div className="review">
@@ -13,7 +16,7 @@ function Review(props) {
 				<p className="userName"> {props.creator ? props.creator.name : null}</p>
 
 				<p className="reviewBody"> {props.reviewBody} </p>
-
+				<Moment format="YYYY/MM/DD">{date}</Moment>
 				{auth.userId === props.creator ? (
 					<img
 						id="closeButton"

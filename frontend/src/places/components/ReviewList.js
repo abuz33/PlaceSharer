@@ -20,7 +20,7 @@ function ReviewList(props) {
 	const userId = auth.userId;
 	const placeId = props.placeId;
 	const [ reviews, setReviews ] = useState();
-	const [ updateReviews, setUpdateReviews ] = useState(null);
+	const [ updateReviews, setUpdateReviews ] = useState(0);
 
 	const [ formState, inputHandler, setFormData ] = useForm(
 		{
@@ -65,7 +65,7 @@ function ReviewList(props) {
 				}
 			);
 		} catch (err) {}
-		setUpdateReviews(1);
+		setUpdateReviews((prevState)=>{return prevState + 1});
 		setFormData({ review: { value: '', isValid: false } });
 	};
 	console.log(reviews);
@@ -73,7 +73,7 @@ function ReviewList(props) {
 	const deleteReview = async (deletedReviewId) => {
 		setReviews((prevReview) => prevReview.filter((review) => review.id !== deletedReviewId));
 		try {
-			await sendRequest(`${process.env.REACT_APP_BACKEND_URL}/reviews/${deletedReviewId}`, 'DELETE', null, {
+			await sendRequest(`${process.env.REACT_APP_BACKEND_URL}/reviews/${deletedReviewId}/${userId}`, 'DELETE', null, {
 				Authorization: 'Bearer ' + auth.token
 			});
 		} catch (err) {}

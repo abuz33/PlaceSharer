@@ -63,7 +63,6 @@ const PlaceItem = (props) => {
 				show={showReviews}
 				onCancel={closeReviews}
 				header={'Reviews'}
-				// footer={<Button onClick={closeReviews}>CLOSE</Button>}
 			>
 				<div>
 					<ReviewList placeUrl={`${process.env.REACT_APP_ASSET_URL}/${props.image}`} placeId={props.id} className='review-list' />
