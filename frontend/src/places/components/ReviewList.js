@@ -14,10 +14,11 @@ import './ReviewList.css';
 
 function ReviewList(props) {
 	const auth = useContext(AuthContext);
+    
 	const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
 
-	const userId = useParams().userId;
+	const userId = auth.userId;
 	const placeId = props.placeId;
 	const [ reviews, setReviews ] = useState();
 	const [ updateReviews, setUpdateReviews ] = useState(null);
@@ -43,7 +44,7 @@ function ReviewList(props) {
 			};
 			fetchReviews();
 		},
-		[ sendRequest, placeId ]
+		[ sendRequest, placeId ,updateReviews ]
 	);
 
 	
