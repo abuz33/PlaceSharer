@@ -11,7 +11,9 @@ function Review(props) {
 			<div className="review">
 				<img className="userImage" src={props.image || 'https://bit.ly/3f7YYNi'} alt={'user'} />
 				<p className="userName"> {props.userName}</p>
+
 				<p className="reviewBody"> {props.reviewBody} </p>
+				
 				{auth.isLoggedIn && <img id="closeButton" src={close} alt={'X'} onClick={()=>{props.deleteReview(props.id)}}/>}
 			</div>
 		</React.Fragment>

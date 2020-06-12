@@ -5,13 +5,10 @@ const HttpError = require('../models/http-error');
 const Review = require('../models/review');
 
 const createReview = async (req, res, next) => {
-	console.log("1", req.body);
-
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
 		return next(new HttpError('Invalid review, please check your data.', 422));
-	}
-	console.log(req.body);
+	};
 	
 
 	const { date, reviewTxt, creator, placeId } = req.body;
@@ -29,6 +26,7 @@ const createReview = async (req, res, next) => {
 		await newReview.save({ session: sess });
 		await sess.commitTransaction();
 	} catch (err) {
+		console.log(err)
 		const error = new HttpError('Creating review failed, please try again.', 500);
 		return next(error);
 	}
@@ -80,11 +78,7 @@ const updateReview = async (req, res, next) => {
 	  return next(error);
 	}
   
-	// if (reviewToEdit.creator.toString() !== req.userData.userId) {
-	//   const error = new HttpError('You are not allowed to edit this review.', 401);
-	//   return next(error);
-	// }
-  
+	
 	reviewToEdit.reviewTxt = reviewTxt;
 
 	try {
@@ -103,11 +97,12 @@ const updateReview = async (req, res, next) => {
 
 const deleteReview = async (req, res, next) => {
 	const reviewId = req.params.reviewid;
-	
 	let reviewToDelete;
 	try {
 		reviewToDelete = await Review.findById(reviewId)
+        
 	} catch (err) {
+        console.log("deleteReview -> err", err)
 		const error = new HttpError(
 			'Something went wrong, could not delete review.',
 			500
@@ -123,9 +118,9 @@ const deleteReview = async (req, res, next) => {
 	try {
 		const sess = await mongoose.startSession();
 		sess.startTransaction();
-		await review.remove({ session: sess });
+		await reviewToDelete.remove({ session: sess });
 		await sess.commitTransaction();
-	  } catch (err) {
+	  } catch (err) {	  
 		const error = new HttpError(
 		  'Something went wrong, could not delete review.',
 		  500

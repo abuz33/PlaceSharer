@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import Modal from '../../shared/components/UIElements/Modal' 
 import Review from './Review';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
 import Input from '../../shared/components/FormElements/Input';
@@ -9,19 +8,19 @@ import { VALIDATOR_MINLENGTH } from '../../shared/util/validators';
 import { useForm } from '../../shared/hooks/form-hook';
 import { AuthContext } from '../../shared/context/auth-context';
 import { useHttpClient } from '../../shared/hooks/http-hook';
-import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 
 import './ReviewList.css';
 
 function ReviewList(props) {
 	const auth = useContext(AuthContext);
-    console.log("ReviewList -> auth", auth)
-	
 	const { isLoading, error, sendRequest, clearError } = useHttpClient();
+	const inputRef= useRef(null);
 
 	const userId = useParams().userId;
 	const placeId = props.placeId;
 	const [ reviews, setReviews ] = useState();
+	const [ updateReviews, setUpdateReviews ] = useState(null);
 
 	const [ formState, inputHandler, setFormData ] = useForm(
 		{
@@ -34,55 +33,76 @@ function ReviewList(props) {
 	);
 
 	// gets all of the reviews of a place
-	useEffect(() => {
-		const fetchReviews = async () => {
-		  try {
-			const responseData = await sendRequest(
-			  `${process.env.REACT_APP_BACKEND_URL}/reviews/${placeId}`
-			);
+	useEffect(
+		() => {
+			const fetchReviews = async () => {
+				try {
+					const responseData = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}/reviews/${placeId}`);
 
-			setReviews(responseData.reviews);
-		  } catch (err) {}
-		};
-		fetchReviews();
-	  }, [sendRequest, formState, placeId]);
+					setReviews(responseData.reviews);
+				} catch (err) {}
+			};
+			fetchReviews();
+		},
+		[ sendRequest, placeId, updateReviews ]
+	);
 
 	const reviewSubmitHandler = async (event) => {
 		event.preventDefault();
 		const reviewDate = new Date();
 		try {
-			await sendRequest(`${process.env.REACT_APP_BACKEND_URL}/reviews/newReview`,
-			 'POST',
-			  JSON.stringify({
-				date: reviewDate,
-				creator: userId,
-				placeId:placeId,
-				reviewTxt: formState.inputs.review.value
-			  }), {
-				Authorization: 'Bearer ' + auth.token, 
-				"Content-Type": "application/json" 
+			await sendRequest(
+				`${process.env.REACT_APP_BACKEND_URL}/reviews/newReview`,
+				'POST',
+				JSON.stringify({
+					date: reviewDate,
+					creator: userId,
+					placeId: placeId,
+					reviewTxt: formState.inputs.review.value
+				}),
+				{
+					Authorization: 'Bearer ' + auth.token,
+					'Content-Type': 'application/json'
+				}
+			);
+		} catch (err) {}
+		setUpdateReviews(1);
+		setFormData({ review: { value: '', isValid: false } });
+	};
+	
+	const deleteReview = async (deletedReviewId) => {
+		setReviews((prevReview) => prevReview.filter((review) => review.id !== deletedReviewId));
+		try {
+			await sendRequest(`${process.env.REACT_APP_BACKEND_URL}/reviews/${deletedReviewId}`, 'DELETE', null, {
+				Authorization: 'Bearer ' + auth.token
 			});
 		} catch (err) {}
-		setFormData({review: { value: '', isValid: false}})
 	};
-	const deleteReview = (deletedReviewId)=>{
-		setReviews((prevReview) =>
-		prevReview.filter((review) => review.id !== deletedReviewId));
-	}
 
 	return (
 		<React.Fragment>
 			<ErrorModal error={error} onClear={clearError} />
-			<img className="place-photo"src={props.placeUrl} alt={"the place "}/> 
-			{reviews && reviews.map((review) => (
-				<Review id={review.id} deleteReview={deleteReview} image={review.userImg} reviewBody={review.reviewTxt} userName={review.creator} />
-			))}
+			<img className="place-photo" src={props.placeUrl} alt={'the place '} />
+			{reviews? reviews.length === 0 && <p><strong>No reviews yet. Be the first to review! </strong></p>: null }
+			{reviews &&
+				reviews.map((review) => (
+					<Review
+						key={review.id}
+						id={review.id}
+						deleteReview={deleteReview}
+						image={review.userImg}
+						reviewBody={review.reviewTxt}
+						userName={review.creator}
+						date={review.date}
+					/>
+				))}
 			{isLoading && <LoadingSpinner asOverlay />}
 			{auth.isLoggedIn && (
 				<form onSubmit={reviewSubmitHandler}>
 					<Input
 						id="review"
 						element="textarea"
+						type="submit"
 						validators={[ VALIDATOR_MINLENGTH(5) ]}
 						errorText="Please enter a valid review (min. 5 characters)."
 						onInput={inputHandler}

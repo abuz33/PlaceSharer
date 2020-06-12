@@ -100,6 +100,7 @@ const createPlace = async (req, res, next) => {
     return next(error);
   }
 
+  
   if (!user) {
     const error = new HttpError('Could not find user for provided id.', 404);
     return next(error);
