@@ -1,6 +1,8 @@
 import React, { useCallback, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { SearchContext } from '../../context/search-context';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './SearchBar.css';
 
 const SearchBar = () => {
@@ -37,8 +39,8 @@ const SearchBar = () => {
         disabled={!searchState.isValid}
       >
         <span className="search-emoji" role="img" aria-label="emoji">
-          🔍
-        </span>{' '}
+          <FontAwesomeIcon icon={faSearch} />
+        </span>
       </button>
     </form>
   );

@@ -6,12 +6,12 @@ input.search-input {
   border: none;
   border-bottom: 2px solid #4d4d4d;
   color: #4d4d4d;
-  width: calc(100% - 65px);
+  width: calc(100% - 40px);
   padding: 0;
   padding-left: 5px;
   padding-bottom: 10px;
   font-size: 1rem;
-  margin-left: 10px;
+  margin-left: 0px;
 }
 input.search-input:focus {
   outline: none;
@@ -40,15 +40,18 @@ button.search {
   border: none;
   border-bottom: 2px solid #4d4d4d;
   padding: 0;
-  padding-bottom: 7px;
+  padding-bottom: 10px;
   font-size: 1rem;
-  margin-right: 10px;
+  margin-right: 0px;
+  color: #4d4d4d;
+  padding-right: 5px;
 }
 button.search:hover {
   cursor: pointer;
 }
 button.search:disabled {
   cursor: not-allowed;
+  color: rgba(77, 77, 77, 0.5);
 }
 button.search:focus {
   outline: none;
@@ -62,17 +65,24 @@ button.search:focus {
 
 @media (min-width: 768px) {
   input.search-input {
-    width: 60px;
+    width: 70px;
+    margin-left: 10px;
+  }
+  form.searchForm {
+    text-align: right;
+  }
+  button.search {
+    margin-right: 10px;
   }
 }
 @media (min-width: 800px) {
   input.search-input {
-    width: 90px;
+    width: 100px;
   }
 }
 @media (min-width: 860px) {
   input.search-input {
-    width: 150px;
+    width: 160px;
   }
 }
 
