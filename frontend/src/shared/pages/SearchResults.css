@@ -4,6 +4,9 @@
   margin: 30px auto;
   max-width: 70%;
 }
+.padding-y {
+  padding: 20px 0;
+}
 @media (min-width: 576px) {
   .card.search-not-found {
     max-width: 60%;
