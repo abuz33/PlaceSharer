@@ -39,15 +39,15 @@ const SearchResults = (props) => {
     fetchResults();
   }, [sendRequest, searchInput]);
 
-  let result;
+  let results;
   if (searchInput === '') {
-    result = (
+    results = (
       <Card className="search-not-found">
         <span> Please enter at least one character! </span>
       </Card>
     );
   } else {
-    result = (
+    results = (
       <div>
         {error && <ErrorModal error={error} onClear={clearError} />}
         {!isLoading && !users.length && !places.length && (
@@ -59,8 +59,6 @@ const SearchResults = (props) => {
         {!isLoading && categorization.all && !!places.length && <PlaceList items={places} />}
         {!isLoading && categorization.users && <UsersList items={users} />}
         {!isLoading && categorization.places && <PlaceList items={places} />}
-        {/* {!isLoading && !!users.length && <UsersList items={users} />}
-        {!isLoading && !!places.length && <PlaceList items={places} />} */}{' '}
       </div>
     );
   }
@@ -94,7 +92,7 @@ const SearchResults = (props) => {
           <LoadingSpinner />
         </div>
       )}
-      {result}
+      {results}
     </div>
   );
 };
