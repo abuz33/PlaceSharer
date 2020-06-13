@@ -9,10 +9,13 @@ import Auth from './user/pages/Auth';
 import MainNavigation from './shared/components/Navigation/MainNavigation';
 import SearchResults from './shared/pages/SearchResults';
 import { AuthContext } from './shared/context/auth-context';
+import { SearchContext } from './shared/context/search-context';
 import { useAuth } from './shared/hooks/auth-hook';
+import { useForm } from './shared/hooks/form-hook';
 
 const App = () => {
   const { token, login, logout, userId } = useAuth();
+  const [formState, inputHandler] = useForm({ search: { value: '', isValid: false } }, false);
 
   let routes;
 
@@ -31,7 +34,7 @@ const App = () => {
         <Route path="/places/:placeId">
           <UpdatePlace />
         </Route>
-        <Route path="/search/:searchInput">
+        <Route path="/search">
           <SearchResults />
         </Route>
         <Redirect to="/" />
@@ -49,7 +52,7 @@ const App = () => {
         <Route path="/auth">
           <Auth />
         </Route>
-        <Route path="/search/:searchInput">
+        <Route path="/search">
           <SearchResults />
         </Route>
         <Redirect to="/auth" />
@@ -67,10 +70,17 @@ const App = () => {
         logout: logout,
       }}
     >
-      <Router>
-        <MainNavigation />
-        <main>{routes}</main>
-      </Router>
+      <SearchContext.Provider
+        value={{
+          searchState: formState,
+          inputHandler: inputHandler,
+        }}
+      >
+        <Router>
+          <MainNavigation />
+          <main>{routes}</main>
+        </Router>
+      </SearchContext.Provider>
     </AuthContext.Provider>
   );
 };
