@@ -8,13 +8,16 @@ import './Review.css';
 function Review(props) {
 	const auth = useContext(AuthContext);
 	const date = props.date;
-    console.log("Review -> props", props.creator)
-	
+	const imgUrl = props.creator ? props.creator.image: null; 
 	return (
 		<React.Fragment>
 			<div className="container">
 				<div className="review">
-					<img className="userImage" src={props.creator? props.creator.image: null || 'https://bit.ly/3f7YYNi'} alt={'user'} />
+					<img
+						className="userImage"
+						src={`${process.env.REACT_APP_ASSET_URL}/${imgUrl}`|| 'https://bit.ly/3f7YYNi'}
+						alt={'user'}
+					/>
 					<p className="userName"> {props.creator ? props.creator.name : null}</p>
 					<p className="reviewBody"> {props.reviewBody} </p>
 					{auth.userId === props.userId ? (

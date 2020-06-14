@@ -47,7 +47,7 @@ function ReviewList(props) {
 	);
 
 	const reviewSubmitHandler = async (event) => {
-		event.preventDefault();
+		
 		const reviewDate = new Date();
 		try {
 			await sendRequest(
@@ -69,8 +69,8 @@ function ReviewList(props) {
 			return prevState + 1;
 		});
 		setFormData({ review: { value: '', isValid: false } });
+		
 	};
-	console.log(`hello sdfsfs`, reviews);
 
 	const deleteReview = async (deletedReviewId) => {
 		setReviews((prevReview) => prevReview.filter((review) => review.id !== deletedReviewId));
@@ -120,7 +120,8 @@ function ReviewList(props) {
 						validators={[ VALIDATOR_MINLENGTH(5) ]}
 						errorText="Please enter a valid review (min. 5 characters)."
 						onInput={inputHandler}
-						initialValid={true}
+						initialValid={false}
+						initialValue={" "}
 						value={formState.review}
 					/>
 					<Button inverse type="submit" disabled={!formState.isValid}>
