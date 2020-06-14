@@ -1,7 +1,7 @@
 .home-container {
   float: left;
   width: 50%;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
   margin-left: 40px;
   margin-top: 0px;
   margin-bottom: 20px;
@@ -32,17 +32,23 @@ p {
   height: 5rem;
 }
 
-@media (max-width: 375px) {
-  .home-container {
-    width: 300px;
-    margin-left: 15px;
-    margin-top: 0px;
+@media (max-width: 600px) {
+  #root main {
+    display: flex;
+    flex-direction: column;
   }
+
+  .card {
+    margin: auto;
+  }
+
+  .home-container {
+    width: 90%;
+    margin: 10px 5%;
+  }
+
   h1 {
-    margin-bottom: 30px;
     font-size: 1rem;
-    padding-top: 10px;
-    padding-left: 10px;
   }
   .home-container__divAvatar {
     text-align: left;
