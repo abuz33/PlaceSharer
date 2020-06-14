@@ -1,5 +1,5 @@
-import React, { useState, useContext, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useContext, useEffect} from 'react';
+
 import Review from './Review';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
 import Input from '../../shared/components/FormElements/Input';
@@ -65,17 +65,24 @@ function ReviewList(props) {
 				}
 			);
 		} catch (err) {}
-		setUpdateReviews((prevState)=>{return prevState + 1});
+		setUpdateReviews((prevState) => {
+			return prevState + 1;
+		});
 		setFormData({ review: { value: '', isValid: false } });
 	};
-	console.log(reviews);
+	console.log(`hello sdfsfs`, reviews);
 
 	const deleteReview = async (deletedReviewId) => {
 		setReviews((prevReview) => prevReview.filter((review) => review.id !== deletedReviewId));
 		try {
-			await sendRequest(`${process.env.REACT_APP_BACKEND_URL}/reviews/${deletedReviewId}/${userId}`, 'DELETE', null, {
-				Authorization: 'Bearer ' + auth.token
-			});
+			await sendRequest(
+				`${process.env.REACT_APP_BACKEND_URL}/reviews/${deletedReviewId}/${userId}`,
+				'DELETE',
+				null,
+				{
+					Authorization: 'Bearer ' + auth.token
+				}
+			);
 		} catch (err) {}
 	};
 
