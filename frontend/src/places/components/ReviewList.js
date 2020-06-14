@@ -96,11 +96,11 @@ function ReviewList(props) {
 						key={review.id}
 						id={review.id}
 						deleteReview={deleteReview}
-						image={review.userImg}
+						image={review.creator}
 						reviewBody={review.reviewTxt}
-						userName={review.userId}
+						userId={review.userId}
 						date={review.date}
-						creator={review.userId}
+						creator={review.creator}
 					/>
 				))}
 			{isLoading && <LoadingSpinner asOverlay />}

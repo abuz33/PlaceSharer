@@ -7,31 +7,33 @@ import './Review.css';
 function Review(props) {
 	const auth = useContext(AuthContext);
 	const date = props.date;
-	console.log('Review -> date', date);
-
+    console.log("Review -> props", props.creator)
+	
 	return (
 		<React.Fragment>
-			<div className="review">
-				<img className="userImage" src={props.creator.image || 'https://bit.ly/3f7YYNi'} alt={'user'} />
-				<p className="userName"> {props.creator ? props.creator.name : null}</p>
-
-				<p className="reviewBody"> {props.reviewBody} </p>
-				<Moment format="YYYY/MM/DD">{date}</Moment>
-				{auth.userId === props.creator ? (
-					<img
-						id="closeButton"
-						src={close}
-						alt={'X'}
-						onClick={() => {
-							props.deleteReview(props.id);
-						}}
-					/>
-				) : (
-					''
-				)}
+			<div className="container">
+				<div className="review">
+					<img className="userImage" src={props.creator? props.creator.image: null || 'https://bit.ly/3f7YYNi'} alt={'user'} />
+					<p className="userName"> {props.creator ? props.creator.name : null}</p>
+					<p className="reviewBody"> {props.reviewBody} </p>
+					{auth.userId === props.userId ? (
+						<img
+							id="closeButton"
+							src={close}
+							alt={'X'}
+							onClick={() => {
+								props.deleteReview(props.id);
+							}}
+						/>
+					) : (
+						''
+					)}
+				</div>
+				<Moment className="date" format="YYYY/MM/DD HH:mm">
+					{date}
+				</Moment>
 			</div>
 		</React.Fragment>
 	);
 }
-
 export default Review;
