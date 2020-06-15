@@ -6,8 +6,8 @@
   max-width: 40rem;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 768px) {             /* please don't change it*/
   .place-list {
-    margin: 20% auto;
+    margin: 1rem auto;
   }
 }

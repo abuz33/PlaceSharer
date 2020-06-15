@@ -1,7 +1,7 @@
 .home-container {
   float: left;
   width: 50%;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   margin-left: 40px;
   margin-top: 0px;
   margin-bottom: 20px;
@@ -13,7 +13,7 @@ h1 {
   font-size: 25px;
 }
 .home-container__divAvatar {
-  text-align: center;
+  text-align: left;
   display: flex;
   flex-direction: column;
 }
@@ -31,8 +31,44 @@ p {
   max-width: 5rem;
   height: 5rem;
 }
+#root main {
+  display: flex;
+  flex-direction: row;
+}
+.card {
+  margin: auto;
+}
 
-@media (max-width: 600px) {
+@media (min-width: 767px) and (max-width: 1024px) {
+  #root main {
+    display: flex;
+    flex-direction: row;
+  }
+  .card {
+    margin: 0px 10px 10px;
+  }
+  .home-container {
+    width: 90%;
+    margin: 10px 5%;
+  }
+
+  h1 {
+    font-size: 1.25rem;
+  }
+  .home-container__divAvatar {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+  }
+  p {
+    font-size: 17px;
+    font-weight: 500;
+    padding-left: 10px;
+    margin-top: 15px;
+  }
+}
+
+@media (max-width: 767px) {
   #root main {
     display: flex;
     flex-direction: column;
