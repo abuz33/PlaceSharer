@@ -69,7 +69,7 @@ function ReviewList(props) {
 			return prevState + 1;
 		});
 		setFormData({ review: { value: '', isValid: false } });
-		
+	
 	};
 
 	const deleteReview = async (deletedReviewId) => {
@@ -115,8 +115,7 @@ function ReviewList(props) {
 				<form onSubmit={reviewSubmitHandler}>
 					<Input
 						id="review"
-						element="textarea"
-						type="submit"
+						element="input"
 						validators={[ VALIDATOR_MINLENGTH(5) ]}
 						errorText="Please enter a valid review (min. 5 characters)."
 						onInput={inputHandler}
