@@ -41,12 +41,13 @@ function Review(props) {
 						id="closeButton"
 						src={dots}
 						alt={'X'}
-						onClick={() => {
+						onMouseEnter={() => {
 							setShowDropList((prevState) => !prevState);
 							setTimeout(() => {
 							setShowDropList(false);
 							}, 3000);
 						}}
+					
 					/>
 				</div>
 				<Moment className="date" format="YYYY/MM/DD HH:mm">
