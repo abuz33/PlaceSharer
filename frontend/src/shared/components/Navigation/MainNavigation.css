@@ -19,11 +19,20 @@
 
 .main-navigation__title {
   color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .main-navigation__title a {
   text-decoration: none;
   color: white;
+}
+.main-navigation__logo {
+  width: 3rem;
+  margin: 0.5rem 0.5rem 0;
 }
 
 .main-navigation__header-nav {
@@ -41,5 +50,21 @@
 
   .main-navigation__header-nav {
     display: block;
+  }
+}
+
+@media (max-width: 375px) {
+  .main-navigation__title {
+    font-size: 1.25em;
+    margin: 15px 0px;
+  }
+
+  .main-navigation__logo {
+    width: 2rem;
+    margin: 0rem;
+  }
+
+  .main-navigation__menu-btn {
+    margin-right: 2rem;
   }
 }

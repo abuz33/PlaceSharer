@@ -6,6 +6,7 @@ import Button from "../../shared/components/FormElements/Button";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import ImageUpload from "../../shared/components/FormElements/ImageUpload";
+
 import {
   VALIDATOR_EMAIL,
   VALIDATOR_MINLENGTH,
@@ -23,7 +24,7 @@ const Auth = () => {
 
   const [formState, inputHandler, setFormData] = useForm(
     {
-      email: {
+          email: {
         value: "",
         isValid: false,
       },
@@ -76,7 +77,7 @@ const Auth = () => {
             email: formState.inputs.email.value,
             password: formState.inputs.password.value,
           }),
-          {
+                    {
             "Content-Type": "application/json",
           }
         );
@@ -105,7 +106,7 @@ const Auth = () => {
       <ErrorModal error={error} onClear={clearError} />
       <Card className="authentication">
         {isLoading && <LoadingSpinner asOverlay />}
-        <h2>Login Required</h2>
+        {isLoginMode ? <h2>LOGIN</h2> : <h2>SIGN UP</h2> }
         <hr />
         <form onSubmit={authSubmitHandler}>
           {!isLoginMode && (

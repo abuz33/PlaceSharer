@@ -5,3 +5,9 @@
   width: 90%;
   max-width: 40rem;
 }
+
+@media (min-width: 768px) {             /* please don't change it*/
+  .place-list {
+    margin: 1rem auto;
+  }
+}

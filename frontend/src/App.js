@@ -5,6 +5,7 @@ import {
   Redirect,
   Switch,
 } from "react-router-dom";
+import'./index.css';
 
 import Users from "./user/pages/Users";
 import NewPlace from "./places/pages/NewPlace";
@@ -14,6 +15,7 @@ import Auth from "./user/pages/Auth";
 import MainNavigation from "./shared/components/Navigation/MainNavigation";
 import { AuthContext } from "./shared/context/auth-context";
 import { useAuth } from "./shared/hooks/auth-hook";
+import HomePageText from "./shared/components/UIElements/Home-page";
 
 const App = () => {
   const { token, login, logout, userId } = useAuth();
@@ -42,12 +44,14 @@ const App = () => {
     routes = (
       <Switch>
         <Route path="/" exact>
-          <Users />
+          <HomePageText />
+          <Auth />
         </Route>
         <Route path="/:userId/places" exact>
           <UserPlaces />
         </Route>
         <Route path="/auth">
+          <HomePageText />
           <Auth />
         </Route>
         <Redirect to="/auth" />
