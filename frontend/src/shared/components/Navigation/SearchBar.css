@@ -1,7 +1,18 @@
 form.searchForm {
   text-align: center;
+  display: none;
 }
-input.search-input {
+form.searchMobileForm {
+  display: block;
+  position: absolute;
+  top: 64px;
+  right: 0;
+  left: 0;
+  width: 100%;
+  height: 64px;
+  background: white;
+}
+.searchForm input.search-input {
   background: transparent;
   border: none;
   border-bottom: 2px solid #4d4d4d;
@@ -12,6 +23,14 @@ input.search-input {
   padding-bottom: 10px;
   font-size: 1rem;
   margin-left: 0px;
+}
+.searchMobileForm input.search-input {
+  width: calc(100% - 44px);
+  height: 100%;
+  font-size: 1rem;
+  border: none;
+  padding-left: 40px;
+  color: #4d4d4d;
 }
 input.search-input:focus {
   outline: none;
@@ -46,6 +65,10 @@ button.search {
   color: #4d4d4d;
   padding-right: 5px;
 }
+.searchMobileForm button.search {
+  border: none;
+  font-size: 1.3rem;
+}
 button.search:hover {
   cursor: pointer;
 }
@@ -56,6 +79,12 @@ button.search:disabled {
 button.search:focus {
   outline: none;
 }
+button.search.mobile {
+  border: none;
+  font-size: 1.5rem;
+  color: white;
+  margin-right: 10px;
+}
 
 @media (min-width: 576px) {
   input.search-input {
@@ -64,7 +93,16 @@ button.search:focus {
 }
 
 @media (min-width: 768px) {
-  input.search-input {
+  form.searchForm {
+    display: block;
+  }
+  span.search-emoji.mobile {
+    display: none;
+  }
+  form.searchMobileForm {
+    display: none;
+  }
+  .searchForm input.search-input {
     width: 70px;
     margin-left: 10px;
   }
@@ -76,18 +114,18 @@ button.search:focus {
   }
 }
 @media (min-width: 800px) {
-  input.search-input {
+  .searchForm input.search-input {
     width: 100px;
   }
 }
 @media (min-width: 860px) {
-  input.search-input {
+  .searchForm input.search-input {
     width: 160px;
   }
 }
 
 @media (min-width: 992px) {
-  input.search-input {
+  .searchForm input.search-input {
     width: 270px;
   }
 }

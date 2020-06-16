@@ -5,26 +5,30 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './SearchBar.css';
 
-const SearchBar = () => {
+const SearchBar = ({ isMobile, closeSearchBarHandler }) => {
   const history = useHistory();
-  const { searchState, inputHandler } = useContext(SearchContext);
+  const { searchState, inputHandler, setCurrentPage } = useContext(SearchContext);
   const changeHandler = useCallback(
     (e) => {
       const value = e.target.value;
       const isValid = value.length > 0;
       inputHandler('search', value, isValid);
+      setCurrentPage(1);
     },
-    [inputHandler],
+    [inputHandler, setCurrentPage],
   );
   const submitHandler = useCallback(
     (e) => {
       e.preventDefault();
       history.push('/search');
+      if (closeSearchBarHandler) {
+        closeSearchBarHandler();
+      }
     },
-    [history],
+    [history, closeSearchBarHandler],
   );
   return (
-    <form className="searchForm">
+    <form className={isMobile ? 'searchMobileForm' : 'searchForm'}>
       <input
         className="search-input"
         value={searchState.inputs.search.value}

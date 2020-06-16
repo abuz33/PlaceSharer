@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 
 import Users from './user/pages/Users';
@@ -16,6 +16,7 @@ import { useForm } from './shared/hooks/form-hook';
 const App = () => {
   const { token, login, logout, userId } = useAuth();
   const [formState, inputHandler] = useForm({ search: { value: '', isValid: false } }, false);
+  const [currentPage, setCurrentPage] = useState(1);
 
   let routes;
 
@@ -74,6 +75,8 @@ const App = () => {
         value={{
           searchState: formState,
           inputHandler: inputHandler,
+          currentPage: currentPage,
+          setCurrentPage: setCurrentPage,
         }}
       >
         <Router>

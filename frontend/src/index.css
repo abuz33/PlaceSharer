@@ -40,3 +40,23 @@ body {
   justify-content: center;
   align-items: center;
 }
+.slide-in-top-enter {
+  transform: translateY(-100%);
+}
+
+.slide-in-top-enter-active {
+  transform: translateY(0);
+  opacity: 1;
+  transition: all 300ms;
+}
+
+.slide-in-top-exit {
+  transform: translateY(0%);
+  opacity: 1;
+}
+
+.slide-in-top-exit-active {
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: all 300ms;
+}

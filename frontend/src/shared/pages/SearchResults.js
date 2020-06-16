@@ -6,15 +6,21 @@ import ErrorModal from '../components/UIElements/ErrorModal';
 import UsersList from '../../user/components/UsersList';
 import PlaceList from '../../places/components/PlaceList';
 import Card from '../components/UIElements/Card';
+import Pagination from '../components/UIElements/Pagination';
 import './SearchResults.css';
 
 const SearchResults = (props) => {
-  const { searchState } = useContext(SearchContext);
+  const { searchState, currentPage, setCurrentPage } = useContext(SearchContext);
   const searchInput = searchState.inputs.search.value;
   const [users, setUsers] = useState([]);
   const [places, setPlaces] = useState([]);
+
+  const [postsPerPage] = useState(5);
   const [categorization, setCategorization] = useState({ all: true, users: false, places: false });
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+
   const categorizeResultsHandler = (e) => {
     const id = e.target.id;
 
@@ -24,6 +30,7 @@ const SearchResults = (props) => {
       places: false,
       [id]: true,
     });
+    setCurrentPage(1);
   };
   useEffect(() => {
     const fetchResults = async () => {
@@ -31,13 +38,26 @@ const SearchResults = (props) => {
         const responseData = await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/search?q=${searchInput}`,
         );
-
         setUsers(await responseData.users);
         setPlaces(await responseData.places);
       } catch (err) {}
     };
     fetchResults();
   }, [sendRequest, searchInput]);
+
+  let allResults = [...users, ...places];
+
+  allResults.sort((a, b) => (a.id > b.id ? 1 : -1));
+  allResults = allResults.slice(indexOfFirstPost, indexOfLastPost);
+
+  const allResultsFilteredUser = allResults.filter((item) => {
+    return item.email;
+  });
+  const allResultsFilteredPlaces = allResults.filter((item) => {
+    return item.location;
+  });
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   let results;
   if (searchInput === '') {
@@ -55,10 +75,19 @@ const SearchResults = (props) => {
             <span> No users or places found similar to '{searchInput}'!</span>
           </Card>
         )}
-        {!isLoading && categorization.all && !!users.length && <UsersList items={users} />}
-        {!isLoading && categorization.all && !!places.length && <PlaceList items={places} />}
-        {!isLoading && categorization.users && <UsersList items={users} />}
-        {!isLoading && categorization.places && <PlaceList items={places} />}
+
+        {!isLoading && categorization.all && !!allResultsFilteredUser.length && (
+          <UsersList items={allResultsFilteredUser} />
+        )}
+        {!isLoading && categorization.all && !!allResultsFilteredPlaces.length && (
+          <PlaceList items={allResultsFilteredPlaces} />
+        )}
+        {!isLoading && categorization.users && (
+          <UsersList items={users.slice(indexOfFirstPost, indexOfLastPost)} />
+        )}
+        {!isLoading && categorization.places && (
+          <PlaceList items={places.slice(indexOfFirstPost, indexOfLastPost)} />
+        )}
       </div>
     );
   }
@@ -93,6 +122,30 @@ const SearchResults = (props) => {
         </div>
       )}
       {results}
+      {searchInput !== '' && categorization.users && (
+        <Pagination
+          postsPerPage={postsPerPage}
+          totalPosts={users.length}
+          paginate={paginate}
+          currentPage={currentPage}
+        />
+      )}
+      {searchInput !== '' && categorization.places && (
+        <Pagination
+          postsPerPage={postsPerPage}
+          totalPosts={places.length}
+          paginate={paginate}
+          currentPage={currentPage}
+        />
+      )}
+      {searchInput !== '' && categorization.all && (
+        <Pagination
+          postsPerPage={postsPerPage}
+          totalPosts={users.length + places.length}
+          paginate={paginate}
+          currentPage={currentPage}
+        />
+      )}
     </div>
   );
 };
