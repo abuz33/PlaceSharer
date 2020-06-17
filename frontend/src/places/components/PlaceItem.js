@@ -1,47 +1,64 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext } from 'react'
 
-import Card from "../../shared/components/UIElements/Card";
-import Button from "../../shared/components/FormElements/Button";
-import Modal from "../../shared/components/UIElements/Modal";
-import Map from "../../shared/components/UIElements/Map";
-import ErrorModal from "../../shared/components/UIElements/ErrorModal";
-import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
-import { AuthContext } from "../../shared/context/auth-context";
-import { useHttpClient } from "../../shared/hooks/http-hook";
-import "./PlaceItem.css";
+import Card from '../../shared/components/UIElements/Card'
+import Button from '../../shared/components/FormElements/Button'
+import Modal from '../../shared/components/UIElements/Modal'
+import Map from '../../shared/components/UIElements/Map'
+import ErrorModal from '../../shared/components/UIElements/ErrorModal'
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner'
+import { AuthContext } from '../../shared/context/auth-context'
+import { useHttpClient } from '../../shared/hooks/http-hook'
+import './PlaceItem.css'
 
 const PlaceItem = (props) => {
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
-  const auth = useContext(AuthContext);
-  const [showMap, setShowMap] = useState(false);
-  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const { isLoading, error, sendRequest, clearError } = useHttpClient()
+  const auth = useContext(AuthContext)
+  const [showMap, setShowMap] = useState(false)
+  const [showConfirmModal, setShowConfirmModal] = useState(false)
+  const [showShareModal, setShowShareModal] = useState(false)
 
-  const openMapHandler = () => setShowMap(true);
+  const openMapHandler = () => setShowMap(true)
 
-  const closeMapHandler = () => setShowMap(false);
+  const closeMapHandler = () => setShowMap(false)
 
   const showDeleteWarningHandler = () => {
-    setShowConfirmModal(true);
-  };
+    setShowConfirmModal(true)
+  }
 
   const cancelDeleteHandler = () => {
-    setShowConfirmModal(false);
-  };
+    setShowConfirmModal(false)
+  }
+
+  const handleShareClick = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: `${props.title}`,
+        text: `${props.title} is a great place to visit`,
+        url: '',
+      })
+    } else {
+      setShowShareModal(true)
+    }
+  }
+
+  const closeShowHandler = () => {
+    setShowShareModal(false)
+  }
 
   const confirmDeleteHandler = async () => {
-    setShowConfirmModal(false);
+    setShowConfirmModal(false)
     try {
       await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/places/${props.id}`,
-        "DELETE",
+        'DELETE',
         null,
         {
-          Authorization: "Bearer " + auth.token,
+          Authorization: 'Bearer ' + auth.token,
         }
-      );
-      props.onDelete(props.id);
+      )
+      props.onDelete(props.id)
     } catch (err) {}
-  };
+  }
 
   return (
     <React.Fragment>
@@ -56,6 +73,13 @@ const PlaceItem = (props) => {
       >
         <div className="map-container">
           <Map center={props.coordinates} zoom={16} />
+        </div>
+      </Modal>
+      <Modal show={showShareModal} onCancel={closeShowHandler}>
+        <div className="place-item__actions">
+          <Button onClick={closeShowHandler}>Share on Twitter</Button>
+          <Button onClick={closeShowHandler}>Share on Twitter</Button>
+          <Button onClick={closeShowHandler}>Share on Twitter</Button>
         </div>
       </Modal>
       <Modal
@@ -106,11 +130,12 @@ const PlaceItem = (props) => {
                 DELETE
               </Button>
             )}
+            <Button onClick={handleShareClick}>Share</Button>
           </div>
         </Card>
       </li>
     </React.Fragment>
-  );
-};
+  )
+}
 
-export default PlaceItem;
+export default PlaceItem

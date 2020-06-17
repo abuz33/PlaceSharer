@@ -4,6 +4,9 @@
     "DB_PASSWORD": "hyfpassword",
     "DB_NAME": "mern",
     "GOOGLE_API_KEY": "AIzaSyCFMHAQxMjhKmBmNPdJs4lRoYeuHtcyawo",
-    "JWT_KEY": "supersecret_dont_share"
+    "JWT_KEY": "supersecret_dont_share",
+    "REACT_APP_CLOUD_NAME": "abuzer33",
+    "REACT_APP_CLOUDINARY_API_KEY": "312517471285393",
+    "REACT_APP_CLOUDINARY_API_SECRET": "jOiHJwz55l9V3V1My8OiCWAc1B8"
   }
 }
