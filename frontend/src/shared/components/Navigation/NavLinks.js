@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useContext } from "react";
+import { NavLink } from "react-router-dom";
 
-import { AuthContext } from '../../context/auth-context';
-import './NavLinks.css';
+import { AuthContext } from "../../context/auth-context";
+import "./NavLinks.css";
 
-const NavLinks = props => {
+const NavLinks = (props) => {
   const auth = useContext(AuthContext);
 
   return (
@@ -26,7 +26,7 @@ const NavLinks = props => {
       )}
       {!auth.isLoggedIn && (
         <li>
-          <NavLink to="/auth">AUTHENTICATE</NavLink>
+          <NavLink to="/auth">LOGIN</NavLink>
         </li>
       )}
       {auth.isLoggedIn && (
