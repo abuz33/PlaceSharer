@@ -58,5 +58,3 @@ function Review(props) {
 	);
 }
 export default Review;
-//delete front end.
-//add a small list with the commend

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect} from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 
 import Review from './Review';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
@@ -47,7 +47,6 @@ function ReviewList(props) {
 	);
 
 	const reviewSubmitHandler = async (event) => {
-		
 		const reviewDate = new Date();
 		try {
 			await sendRequest(
@@ -68,8 +67,8 @@ function ReviewList(props) {
 		setUpdateReviews((prevState) => {
 			return prevState + 1;
 		});
-		setFormData({ review: { value: '', isValid: false } });
-		
+
+		setFormData('', false);
 	};
 
 	const deleteReview = async (deletedReviewId) => {
@@ -115,15 +114,14 @@ function ReviewList(props) {
 				<form onSubmit={reviewSubmitHandler}>
 					<Input
 						id="review"
-						element="textarea"
+						element="input"
 						validators={[ VALIDATOR_MINLENGTH(5) ]}
 						errorText="Please enter a valid review (min. 5 characters)."
 						onInput={inputHandler}
 						initialValid={false}
-						initialValue={" "}
-						value={formState.review}
+						initialValue={' '}
+						value={formState.inputs.review ? formState.inputs.review.value : null}
 					/>
-					
 					<Button inverse type="submit" disabled={!formState.isValid}>
 						POST REVIEW
 					</Button>

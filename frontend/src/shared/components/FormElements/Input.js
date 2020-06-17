@@ -32,6 +32,7 @@ const Input = (props) => {
 	const { id, onInput } = props;
 	const { value, isValid } = inputState;
 
+
 	useEffect(
 		() => {
 			onInput(id, value, isValid);
@@ -52,6 +53,7 @@ const Input = (props) => {
 			type: 'TOUCH'
 		});
 	};
+	console.log("Input -> inputState.value", inputState.value)
 
 	const element =
 		props.element === 'input' ? (
@@ -59,9 +61,9 @@ const Input = (props) => {
 				id={props.id}
 				type={props.type}
 				placeholder={props.placeholder}
+				value={inputState.value}
 				onChange={changeHandler}
 				onBlur={touchHandler}
-				value={inputState.value}
 			/>
 		) : (
 			<textarea
