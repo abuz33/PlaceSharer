@@ -8,7 +8,10 @@ const userSchema = new Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true, minlength: 6 },
   image: { type: String, required: true },
-  places: [{ type: mongoose.Types.ObjectId, required: true, ref: 'Place' }]
+  places: [{ type: mongoose.Types.ObjectId, required: true, ref: 'Place' }],
+  sentRequests: [{ user: { type: mongoose.Types.ObjectId, ref: 'User' }, date: Date }],
+  getRequests: [{ user: { type: mongoose.Types.ObjectId, ref: 'User' }, date: Date }],
+  friends: [{ type: mongoose.Types.ObjectId, required: false, default: null, ref: 'User' }],
 });
 
 userSchema.plugin(uniqueValidator);
