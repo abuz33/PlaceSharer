@@ -1,4 +1,6 @@
 import React, { useState, useContext } from 'react'
+import { faShareAlt } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import Card from '../../shared/components/UIElements/Card'
 import Button from '../../shared/components/FormElements/Button'
@@ -21,13 +23,9 @@ const PlaceItem = (props) => {
 
   const closeMapHandler = () => setShowMap(false)
 
-  const showDeleteWarningHandler = () => {
-    setShowConfirmModal(true)
-  }
+  const showDeleteWarningHandler = () => setShowConfirmModal(true)
 
-  const cancelDeleteHandler = () => {
-    setShowConfirmModal(false)
-  }
+  const cancelDeleteHandler = () => setShowConfirmModal(false)
 
   const handleShareClick = () => {
     if (navigator.share) {
@@ -40,8 +38,36 @@ const PlaceItem = (props) => {
       setShowShareModal(true)
     }
   }
+  const closeShowHandler = () => setShowShareModal(false)
 
-  const closeShowHandler = () => {
+  const shareOnFacebook = () => {
+    const { description } = props
+    const url = window.document.location.href
+
+    window.open(
+      `https://www.facebook.com/sharer/share_button.php?url=${url}&via=Sitename&text=${description}`,
+      'Twitter Share',
+      'width=620, height=620'
+    )
+    setShowShareModal(false)
+    return false
+  }
+
+  const shareOnTwitter = () => {
+    const { description } = props
+
+    const url = window.document.location.href
+
+    window.open(
+      `http://www.twitter.com/share?u=${url}&via=Sitename&text=${description}`,
+      'Facebook Share',
+      'width=620, height=620'
+    )
+    setShowShareModal(false)
+    return false
+  }
+
+  const shareOnInstagram = () => {
     setShowShareModal(false)
   }
 
@@ -77,9 +103,9 @@ const PlaceItem = (props) => {
       </Modal>
       <Modal show={showShareModal} onCancel={closeShowHandler}>
         <div className="place-item__actions">
-          <Button onClick={closeShowHandler}>Share on Twitter</Button>
-          <Button onClick={closeShowHandler}>Share on Twitter</Button>
-          <Button onClick={closeShowHandler}>Share on Twitter</Button>
+          <Button onClick={shareOnFacebook}>Share on Facebook</Button>
+          <Button onClick={shareOnTwitter}>Share on Twitter</Button>
+          <Button onClick={shareOnInstagram}>Share on Instagram</Button>
         </div>
       </Modal>
       <Modal
@@ -130,7 +156,9 @@ const PlaceItem = (props) => {
                 DELETE
               </Button>
             )}
-            <Button onClick={handleShareClick}>Share</Button>
+            <Button className="font-awesome__share" onClick={handleShareClick}>
+              <FontAwesomeIcon icon={faShareAlt} size="lg" />
+            </Button>
           </div>
         </Card>
       </li>
