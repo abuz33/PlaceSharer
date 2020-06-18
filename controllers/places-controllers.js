@@ -88,7 +88,8 @@ const createPlace = async (req, res, next) => {
     creator: req.userData.userId,
   })
 
-  let user
+  let user;
+
   try {
     user = await User.findById(req.userData.userId)
   } catch (err) {
@@ -100,8 +101,6 @@ const createPlace = async (req, res, next) => {
     const error = new HttpError('Could not find user for provided id.', 404)
     return next(error)
   }
-
-  console.log(user)
 
   try {
     const sess = await mongoose.startSession()

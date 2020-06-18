@@ -56,9 +56,14 @@
 .font-awesome__share {
   cursor: hand;
 }
+.reviewsModal {
+  max-height: 70vh; 
+  overflow-x: scroll;
+}
 
 @media (min-width: 768px) {
   .place-item__image {
     height: 20rem;
   }
+
 }

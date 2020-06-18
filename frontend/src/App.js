@@ -76,6 +76,7 @@ const App = () => {
         userId: userId,
         login: login,
         logout: logout,
+        
       }}
     >
       <SearchContext.Provider

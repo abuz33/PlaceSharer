@@ -9,11 +9,14 @@ const placesRoutes = require('./routes/places-routes')
 const usersRoutes = require('./routes/users-routes')
 const searchRoutes = require('./routes/search-routes')
 const friendsRoutes = require('./routes/friend-routes')
+const reviewsRoutes = require('./routes/reviews-routes')
 const HttpError = require('./models/http-error')
+
 
 const app = express()
 
 app.use(bodyParser.json())
+
 
 app.use('/uploads/images', express.static(path.join('uploads', 'images')))
 
@@ -31,6 +34,7 @@ app.use((req, res, next) => {
 app.use('/api/places', placesRoutes)
 app.use('/api/users', usersRoutes)
 app.use('/api/friends', friendsRoutes)
+app.use('/api/reviews', reviewsRoutes);
 app.use('/api', searchRoutes)
 
 app.use((req, res, next) => {
@@ -51,10 +55,13 @@ app.use((error, req, res, next) => {
   res.json({ message: error.message || 'An unknown error occurred!' })
 })
 
+
 mongoose
+
   .connect(
-    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0-wqgsj.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
-  )
+    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0-wqgsj.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`,
+     { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true },
+    )
   .then(() => {
     app.listen(5000)
   })

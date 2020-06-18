@@ -10,7 +10,8 @@ import ErrorModal from '../../shared/components/UIElements/ErrorModal'
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner'
 import { AuthContext } from '../../shared/context/auth-context'
 import { useHttpClient } from '../../shared/hooks/http-hook'
-import './PlaceItem.css'
+import ReviewList from './ReviewList';
+import './PlaceItem.css';
 
 const PlaceItem = (props) => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient()
@@ -18,6 +19,11 @@ const PlaceItem = (props) => {
   const [showMap, setShowMap] = useState(false)
   const [showConfirmModal, setShowConfirmModal] = useState(false)
   const [showShareModal, setShowShareModal] = useState(false)
+  const [ showReviews, setShowReviews ] = useState(false);
+  
+  const openReviews = () => setShowReviews(true);
+  
+  const closeReviews = () => setShowReviews(false);
 
   const openMapHandler = () => setShowMap(true)
 
@@ -101,6 +107,16 @@ const PlaceItem = (props) => {
           <Map center={props.coordinates} zoom={16} />
         </div>
       </Modal>
+      <Modal
+				className = "reviewsModal"
+				show={showReviews}
+				onCancel={closeReviews}
+				header={'Reviews'}
+			>
+				<div>
+					<ReviewList placeUrl={`${process.env.REACT_APP_ASSET_URL}/${props.image}`} placeId={props.id} className='review-list' />
+				</div>
+			</Modal>
       <Modal show={showShareModal} onCancel={closeShowHandler}>
         <div className="place-item__actions">
           <Button onClick={shareOnFacebook}>Share on Facebook</Button>
@@ -165,5 +181,6 @@ const PlaceItem = (props) => {
     </React.Fragment>
   )
 }
+
 
 export default PlaceItem
