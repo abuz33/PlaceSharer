@@ -56,7 +56,6 @@ const MainNavigation = (props) => {
               setIsMobileSearchOpen((currentState) => {
                 return !currentState;
               });
-              console.log(isMobileSearchOpen);
             }}
           >
             <span className="search-emoji mobile" role="img" aria-label="emoji">

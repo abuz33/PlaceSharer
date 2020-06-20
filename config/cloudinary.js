@@ -7,3 +7,5 @@ cloudinary.config({
   api_key: process.env.REACT_APP_CLOUDINARY_API_KEY,
   api_secret: process.env.REACT_APP_CLOUDINARY_API_SECRET,
 })
+
+module.exports = cloudinary

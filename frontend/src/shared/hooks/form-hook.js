@@ -23,8 +23,6 @@ const formReducer = (state, action) => {
         isValid: formIsValid
       };
     case 'SET_DATA':
-      console.log("formReducer -> action.formIsValid", action.formIsValid)
-      console.log("formReducer -> action.inputs", action.inputs)
       return {
         inputs: action.inputs,
         isValid: action.formIsValid
