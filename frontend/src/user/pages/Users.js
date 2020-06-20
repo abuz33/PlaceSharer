@@ -20,13 +20,13 @@ const Users = () => {
     const fetchUsers = async () => {
       try {
         const responseData = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}/users`);
-
+        
         setLoadedUsers(responseData.users);
       } catch (err) {}
     };
     fetchUsers();
   }, [sendRequest]);
-
+  console.log("frontend-loadedUsers:", loadedUsers)
   return (
     <React.Fragment >
       <ErrorModal error={error} onClear={clearError} />

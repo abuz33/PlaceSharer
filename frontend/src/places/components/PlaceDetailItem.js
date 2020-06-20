@@ -3,7 +3,6 @@ import { faShareAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebookSquare, faTwitterSquare, faPinterestSquare } from '@fortawesome/free-brands-svg-icons'
 
-
 import Card from '../../shared/components/UIElements/Card'
 import Button from '../../shared/components/FormElements/Button'
 import Modal from '../../shared/components/UIElements/Modal'
@@ -12,20 +11,20 @@ import ErrorModal from '../../shared/components/UIElements/ErrorModal'
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner'
 import { AuthContext } from '../../shared/context/auth-context'
 import { useHttpClient } from '../../shared/hooks/http-hook'
-import ReviewList from './ReviewList';
-import './PlaceItem.css';
 
-const PlaceItem = (props) => {
+import './PlaceDetailItem.css';
+
+const PlaceDetailItem = (props) => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient()
   const auth = useContext(AuthContext)
   const [showMap, setShowMap] = useState(false)
   const [showConfirmModal, setShowConfirmModal] = useState(false)
   const [showShareModal, setShowShareModal] = useState(false)
-  const [ showReviews, setShowReviews ] = useState(false);
+  // const [ showReviews, setShowReviews ] = useState(false);
   
-  const openReviews = () => setShowReviews(true);
+  // const openReviews = () => setShowReviews(true);
   
-  const closeReviews = () => setShowReviews(false);
+  // const closeReviews = () => setShowReviews(false);
 
   const openMapHandler = () => setShowMap(true)
 
@@ -109,19 +108,19 @@ const PlaceItem = (props) => {
           <Map center={props.coordinates} zoom={16} />
         </div>
       </Modal>
-      <Modal
+      {/* <Modal
 				className = "reviewsModal"
 				show={showReviews}
 				onCancel={closeReviews}
 				header={'Reviews'}
 			>
-				{/* <div>
+				<div>
 					<ReviewList placeUrl={`${process.env.REACT_APP_ASSET_URL}/${props.image}`} placeId={props.id} className='review-list' />
-				</div> */}
-			</Modal>
+				</div>
+			</Modal> */}
       <Modal show={showShareModal} onCancel={closeShowHandler} header = {'Share place on social media'}>
         <div className="place-item__actions">
-        <div className= "share-button-container">
+          <div className= "share-button-container">
             <Button share>
           <FontAwesomeIcon icon={faFacebookSquare} color='#3b5998' size='4x' onClick={shareOnFacebook} />
           </Button>
@@ -157,15 +156,8 @@ const PlaceItem = (props) => {
       </Modal>
       <li className="place-item">
         <Card className="place-item__content">
-          <div className="share-place-button">
-            <Button className="font-awesome__share" onClick={handleShareClick}>
-                <FontAwesomeIcon icon={faShareAlt} size="lg" />
-              </Button>
-              </div>
           {isLoading && <LoadingSpinner asOverlay />}
-          
           <div className="place-item__image">
-           
             <img
               src={`${props.image}`}
               alt={props.title}
@@ -176,28 +168,10 @@ const PlaceItem = (props) => {
             <h3>{props.address}</h3>
             <p>{props.description}</p>
           </div>
-          <div className="place-item__actions">
-            <Button inverse onClick={openMapHandler}>
-              VIEW ON MAP
+          <div className="share-place-button">
+            <Button className="font-awesome__share" onClick={handleShareClick}>
+              <FontAwesomeIcon icon={faShareAlt} size="lg" />
             </Button>
-            
-            <Button to ={`/places/${props.creatorId}/${props.id}/`} >
-              DETAILS
-            </Button>
-            
-
-           
-          
-            {auth.userId === props.creatorId && (
-              <Button to={`/places/${props.id}`}>EDIT</Button>
-            )}
-
-            {auth.userId === props.creatorId && (
-              <Button danger onClick={showDeleteWarningHandler}>
-                DELETE
-              </Button>
-            )}
-           
           </div>
         </Card>
       </li>
@@ -206,4 +180,4 @@ const PlaceItem = (props) => {
 }
 
 
-export default PlaceItem
+export default PlaceDetailItem

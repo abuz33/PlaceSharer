@@ -1,5 +1,7 @@
 .place-item {
   margin: 1rem 0;
+  width: 90%;
+  max-width: 40rem;
 }
 
 .place-item__content {
@@ -22,13 +24,6 @@
 
   cursor: hand;
 
-}
-
-.share-place-button{
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  z-index: 3;
 }
 
 .place-item__image img {
@@ -75,6 +70,12 @@
 }
 
 
+.share-place-button{
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
 .share-button-container{
   margin: 0 100px;
   display: flex;
@@ -89,8 +90,6 @@
 .share-button-container button::after{
   cursor: hand;
 }
-
-
 
 @media (min-width: 768px) {
   .place-item__image {

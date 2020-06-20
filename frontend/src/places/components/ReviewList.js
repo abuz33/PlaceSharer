@@ -87,8 +87,9 @@ function ReviewList(props) {
 
 	return (
 		<React.Fragment>
+			<h2>Comments</h2>
 			<ErrorModal error={error} onClear={clearError} />
-			<img className="place-photo" src={props.placeUrl} alt={'the place '} />
+			{/* <img className="place-photo" src={props.placeUrl} alt={'the place '} /> */}
 			{reviews ? (
 				reviews.length === 0 && (
 					<p>

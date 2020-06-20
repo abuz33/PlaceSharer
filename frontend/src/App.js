@@ -8,6 +8,7 @@ import Users from './user/pages/Users';
 import NewPlace from './places/pages/NewPlace';
 import UserPlaces from './places/pages/UserPlaces';
 import UpdatePlace from './places/pages/UpdatePlace';
+import PlaceDetail from './places/pages/PlaceDetail';
 import Auth from './user/pages/Auth';
 import MainNavigation from './shared/components/Navigation/MainNavigation';
 import SearchResults from './shared/pages/SearchResults';
@@ -37,8 +38,11 @@ const App = () => {
         <Route path="/places/new" exact>
           <NewPlace />
         </Route>
-        <Route path="/places/:placeId">
+        <Route path="/places/:placeId" exact>
           <UpdatePlace />
+        </Route>
+        <Route path="/places/:userId/:placeId">
+          <PlaceDetail />
         </Route>
         <Route path="/search">
           <SearchResults />

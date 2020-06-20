@@ -16,11 +16,11 @@ function Review(props) {
 		<React.Fragment>
 			<div className="container">
 				<div className="review">
-					<img
+					{/* <img
 						className="userImage"
 						src={`${process.env.REACT_APP_ASSET_URL}/${imgUrl}` || 'https://bit.ly/3f7YYNi'}
 						alt={'user'}
-					/>
+					/> */}
 					<p className="userName"> {props.creator ? props.creator.name : null}</p>
 					<p className="reviewBody"> {props.reviewBody} </p>
 					{showDropList && (
