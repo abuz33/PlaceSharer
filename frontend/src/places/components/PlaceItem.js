@@ -1,8 +1,12 @@
 import React, { useState, useContext } from 'react'
 import { faShareAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFacebookSquare, faTwitterSquare, faPinterestSquare } from '@fortawesome/free-brands-svg-icons'
-
+import {
+  faFacebookSquare,
+  faTwitterSquare,
+  faPinterestSquare,
+} from '@fortawesome/free-brands-svg-icons'
+import { Helmet } from 'react-helmet'
 
 import Card from '../../shared/components/UIElements/Card'
 import Button from '../../shared/components/FormElements/Button'
@@ -12,8 +16,8 @@ import ErrorModal from '../../shared/components/UIElements/ErrorModal'
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner'
 import { AuthContext } from '../../shared/context/auth-context'
 import { useHttpClient } from '../../shared/hooks/http-hook'
-import ReviewList from './ReviewList';
-import './PlaceItem.css';
+// import ReviewList from './ReviewList'
+import './PlaceItem.css'
 
 const PlaceItem = (props) => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient()
@@ -21,11 +25,11 @@ const PlaceItem = (props) => {
   const [showMap, setShowMap] = useState(false)
   const [showConfirmModal, setShowConfirmModal] = useState(false)
   const [showShareModal, setShowShareModal] = useState(false)
-  const [ showReviews, setShowReviews ] = useState(false);
-  
-  const openReviews = () => setShowReviews(true);
-  
-  const closeReviews = () => setShowReviews(false);
+  const [showReviews, setShowReviews] = useState(false)
+
+  const openReviews = () => setShowReviews(true)
+
+  const closeReviews = () => setShowReviews(false)
 
   const openMapHandler = () => setShowMap(true)
 
@@ -47,11 +51,10 @@ const PlaceItem = (props) => {
     }
   }
   const closeShowHandler = () => setShowShareModal(false)
+  const { description, image } = props
+  const url = window.document.location.href
 
   const shareOnFacebook = () => {
-    const { description } = props
-    const url = window.document.location.href
-
     window.open(
       `https://www.facebook.com/sharer/share_button.php?url=${url}&via=Sitename&text=${description}`,
       'Twitter Share',
@@ -62,10 +65,6 @@ const PlaceItem = (props) => {
   }
 
   const shareOnTwitter = () => {
-    const { description } = props
-
-    const url = window.document.location.href
-
     window.open(
       `http://www.twitter.com/share?u=${url}&via=Sitename&text=${description}`,
       'Facebook Share',
@@ -75,7 +74,7 @@ const PlaceItem = (props) => {
     return false
   }
 
-  const shareOnInstagram = () => {
+  const shareOnPinterest = () => {
     setShowShareModal(false)
   }
 
@@ -96,6 +95,12 @@ const PlaceItem = (props) => {
 
   return (
     <React.Fragment>
+      <Helmet>
+        <meta property="og:type" content="Social Media APP" />
+        <meta property="og:title" content={props.title} />
+        <meta property="og:description" content={props.description} />
+        <meta property="og:image" content={props.image} />
+      </Helmet>
       <ErrorModal error={error} onClear={clearError} />
       <Modal
         show={showMap}
@@ -110,28 +115,51 @@ const PlaceItem = (props) => {
         </div>
       </Modal>
       <Modal
-				className = "reviewsModal"
-				show={showReviews}
-				onCancel={closeReviews}
-				header={'Reviews'}
-			>
-				{/* <div>
+        className="reviewsModal"
+        show={showReviews}
+        onCancel={closeReviews}
+        header={'Reviews'}
+      >
+        {/* <div>
 					<ReviewList placeUrl={`${process.env.REACT_APP_ASSET_URL}/${props.image}`} placeId={props.id} className='review-list' />
 				</div> */}
-			</Modal>
-      <Modal show={showShareModal} onCancel={closeShowHandler} header = {'Share place on social media'}>
+      </Modal>
+      <Modal
+        show={showShareModal}
+        onCancel={closeShowHandler}
+        header={'Share place on social media'}
+      >
         <div className="place-item__actions">
-        <div className= "share-button-container">
+          <div className="share-button-container">
             <Button share>
-          <FontAwesomeIcon icon={faFacebookSquare} color='#3b5998' size='4x' onClick={shareOnFacebook} />
-          </Button>
-          <Button share>
-          <FontAwesomeIcon icon={faTwitterSquare} color='#38A1F3' size='4x' onClick={shareOnTwitter} />
-          </Button> 
-          <Button share>
-          <FontAwesomeIcon icon={faPinterestSquare} color='#c8232c' size='4x' onClick={shareOnInstagram}/>
-          </Button>
-        </div>
+              <FontAwesomeIcon
+                icon={faFacebookSquare}
+                color="#3b5998"
+                size="4x"
+                onClick={shareOnFacebook}
+              />
+            </Button>
+            <Button share>
+              <FontAwesomeIcon
+                icon={faTwitterSquare}
+                color="#38A1F3"
+                size="4x"
+                onClick={shareOnTwitter}
+              />
+            </Button>
+            <Button share>
+              <a
+                href={`https://www.pinterest.com/pin/create/button/?url=${url}&media=${image}&description=${description}&via=Sitename&`}
+              >
+                <FontAwesomeIcon
+                  icon={faPinterestSquare}
+                  color="#c8232c"
+                  size="4x"
+                  onClick={shareOnPinterest}
+                />
+              </a>
+            </Button>
+          </div>
         </div>
       </Modal>
       <Modal
@@ -159,17 +187,13 @@ const PlaceItem = (props) => {
         <Card className="place-item__content">
           <div className="share-place-button">
             <Button className="font-awesome__share" onClick={handleShareClick}>
-                <FontAwesomeIcon icon={faShareAlt} size="lg" />
-              </Button>
-              </div>
+              <FontAwesomeIcon icon={faShareAlt} size="lg" />
+            </Button>
+          </div>
           {isLoading && <LoadingSpinner asOverlay />}
-          
+
           <div className="place-item__image">
-           
-            <img
-              src={`${props.image}`}
-              alt={props.title}
-            />
+            <img src={`${props.image}`} alt={props.title} />
           </div>
           <div className="place-item__info">
             <h2>{props.title}</h2>
@@ -180,14 +204,11 @@ const PlaceItem = (props) => {
             <Button inverse onClick={openMapHandler}>
               VIEW ON MAP
             </Button>
-            
-            <Button to ={`/places/${props.creatorId}/${props.id}/`} >
+
+            <Button to={`/places/${props.creatorId}/${props.id}/`}>
               DETAILS
             </Button>
-            
 
-           
-          
             {auth.userId === props.creatorId && (
               <Button to={`/places/${props.id}`}>EDIT</Button>
             )}
@@ -197,13 +218,11 @@ const PlaceItem = (props) => {
                 DELETE
               </Button>
             )}
-           
           </div>
         </Card>
       </li>
     </React.Fragment>
   )
 }
-
 
 export default PlaceItem

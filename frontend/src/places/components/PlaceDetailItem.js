@@ -1,38 +1,22 @@
 import React, { useState, useContext } from 'react'
 import { faShareAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFacebookSquare, faTwitterSquare, faPinterestSquare } from '@fortawesome/free-brands-svg-icons'
+import {
+  faFacebookSquare,
+  faTwitterSquare,
+  faPinterestSquare,
+} from '@fortawesome/free-brands-svg-icons'
 
 import Card from '../../shared/components/UIElements/Card'
 import Button from '../../shared/components/FormElements/Button'
 import Modal from '../../shared/components/UIElements/Modal'
-import Map from '../../shared/components/UIElements/Map'
 import ErrorModal from '../../shared/components/UIElements/ErrorModal'
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner'
-import { AuthContext } from '../../shared/context/auth-context'
-import { useHttpClient } from '../../shared/hooks/http-hook'
 
-import './PlaceDetailItem.css';
+import './PlaceDetailItem.css'
 
 const PlaceDetailItem = (props) => {
-  const { isLoading, error, sendRequest, clearError } = useHttpClient()
-  const auth = useContext(AuthContext)
-  const [showMap, setShowMap] = useState(false)
-  const [showConfirmModal, setShowConfirmModal] = useState(false)
   const [showShareModal, setShowShareModal] = useState(false)
-  // const [ showReviews, setShowReviews ] = useState(false);
-  
-  // const openReviews = () => setShowReviews(true);
-  
-  // const closeReviews = () => setShowReviews(false);
-
-  const openMapHandler = () => setShowMap(true)
-
-  const closeMapHandler = () => setShowMap(false)
-
-  const showDeleteWarningHandler = () => setShowConfirmModal(true)
-
-  const cancelDeleteHandler = () => setShowConfirmModal(false)
 
   const handleShareClick = () => {
     if (navigator.share) {
@@ -74,94 +58,52 @@ const PlaceDetailItem = (props) => {
     return false
   }
 
-  const shareOnInstagram = () => {
+  const shareOnPinterest = () => {
     setShowShareModal(false)
-  }
-
-  const confirmDeleteHandler = async () => {
-    setShowConfirmModal(false)
-    try {
-      await sendRequest(
-        `${process.env.REACT_APP_BACKEND_URL}/places/${props.id}`,
-        'DELETE',
-        null,
-        {
-          Authorization: 'Bearer ' + auth.token,
-        }
-      )
-      props.onDelete(props.id)
-    } catch (err) {}
   }
 
   return (
     <React.Fragment>
-      <ErrorModal error={error} onClear={clearError} />
+      <ErrorModal error={props.error} onClear={props.clearError} />
       <Modal
-        show={showMap}
-        onCancel={closeMapHandler}
-        header={props.address}
-        contentClass="place-item__modal-content"
-        footerClass="place-item__modal-actions"
-        footer={<Button onClick={closeMapHandler}>CLOSE</Button>}
+        show={showShareModal}
+        onCancel={closeShowHandler}
+        header={'Share place on social media'}
       >
-        <div className="map-container">
-          <Map center={props.coordinates} zoom={16} />
-        </div>
-      </Modal>
-      {/* <Modal
-				className = "reviewsModal"
-				show={showReviews}
-				onCancel={closeReviews}
-				header={'Reviews'}
-			>
-				<div>
-					<ReviewList placeUrl={`${process.env.REACT_APP_ASSET_URL}/${props.image}`} placeId={props.id} className='review-list' />
-				</div>
-			</Modal> */}
-      <Modal show={showShareModal} onCancel={closeShowHandler} header = {'Share place on social media'}>
         <div className="place-item__actions">
-          <div className= "share-button-container">
+          <div className="share-button-container">
             <Button share>
-          <FontAwesomeIcon icon={faFacebookSquare} color='#3b5998' size='4x' onClick={shareOnFacebook} />
-          </Button>
-          <Button share>
-          <FontAwesomeIcon icon={faTwitterSquare} color='#38A1F3' size='4x' onClick={shareOnTwitter} />
-          </Button> 
-          <Button share>
-          <FontAwesomeIcon icon={faPinterestSquare} color='#c8232c' size='4x' onClick={shareOnInstagram}/>
-          </Button>
-        </div>
-        </div>
-      </Modal>
-      <Modal
-        show={showConfirmModal}
-        onCancel={cancelDeleteHandler}
-        header="Are you sure?"
-        footerClass="place-item__modal-actions"
-        footer={
-          <React.Fragment>
-            <Button inverse onClick={cancelDeleteHandler}>
-              CANCEL
+              <FontAwesomeIcon
+                icon={faFacebookSquare}
+                color="#3b5998"
+                size="4x"
+                onClick={shareOnFacebook}
+              />
             </Button>
-            <Button danger onClick={confirmDeleteHandler}>
-              DELETE
+            <Button share>
+              <FontAwesomeIcon
+                icon={faTwitterSquare}
+                color="#38A1F3"
+                size="4x"
+                onClick={shareOnTwitter}
+              />
             </Button>
-          </React.Fragment>
-        }
-      >
-        <p>
-          Do you want to proceed and delete this place? Please note that it
-          can't be undone thereafter.
-        </p>
+            <Button share>
+              <FontAwesomeIcon
+                icon={faPinterestSquare}
+                color="#c8232c"
+                size="4x"
+                onClick={shareOnPinterest}
+              />
+            </Button>
+          </div>
+        </div>
       </Modal>
       <li className="place-item">
         <Card className="place-item__content">
-          {isLoading && <LoadingSpinner asOverlay />}
+          {props.isLoading && <LoadingSpinner asOverlay />}
           <div className="place-item__image">
-            <img
-              src={`${props.image}`}
-              alt={props.title}
-            />
+            <img src={`${props.image}`} alt={props.title} />
           </div>
           <div className="place-item__info">
             <h2>{props.title}</h2>
@@ -178,6 +120,5 @@ const PlaceDetailItem = (props) => {
     </React.Fragment>
   )
 }
-
 
 export default PlaceDetailItem
