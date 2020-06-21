@@ -18,23 +18,7 @@
   margin-right: 1.5rem;
   position: relative;
 }
-.font-awesome__share {
-  color: black;
-  background-color: white;
-  cursor: pointer;
 
-}
-
-.title-block{
- display: flex;
- justify-content: center;
-}
-
-.font-awesome__share{
-  position: absolute;
-  right: 1rem;
-  z-index: 3;
-}
 
 .place-item__image img {
   position: relative;
@@ -74,24 +58,6 @@
 }
 
 
-.reviewsModal {
-  max-height: 70vh; 
-  overflow-x: scroll;
-}
-
-
-.share-button-container{
-  margin: 0 100px;
-  display: flex;
-  justify-content: space-between;
-}
-
-
-
-.share-icon{
-  cursor: pointer;
-  
-}
 
 
 @media (min-width: 768px) {
