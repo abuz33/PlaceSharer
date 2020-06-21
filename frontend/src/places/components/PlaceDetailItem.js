@@ -72,30 +72,30 @@ const PlaceDetailItem = (props) => {
       >
         <div className="place-item__actions">
           <div className="share-button-container">
-            <Button share>
+          <div className ="share-icon">
               <FontAwesomeIcon
                 icon={faFacebookSquare}
                 color="#3b5998"
                 size="4x"
                 onClick={shareOnFacebook}
               />
-            </Button>
-            <Button share>
+            </div>
+            <div className ="share-icon">
               <FontAwesomeIcon
                 icon={faTwitterSquare}
                 color="#38A1F3"
                 size="4x"
                 onClick={shareOnTwitter}
               />
-            </Button>
-            <Button share>
+            </div>
+            <div className ="share-icon">
               <FontAwesomeIcon
                 icon={faPinterestSquare}
                 color="#c8232c"
                 size="4x"
                 onClick={shareOnPinterest}
               />
-            </Button>
+            </div>
           </div>
         </div>
       </Modal>
@@ -106,15 +106,16 @@ const PlaceDetailItem = (props) => {
             <img src={`${props.image}`} alt={props.title} />
           </div>
           <div className="place-item__info">
-            <h2>{props.title}</h2>
+            <div className="title-block">
+              <h2>{props.title}</h2>
+              <div className="font-awesome__share" onClick={handleShareClick}>
+                <FontAwesomeIcon icon={faShareAlt} size="2x" />
+              </div>
+            </div>
             <h3>{props.address}</h3>
             <p>{props.description}</p>
           </div>
-          <div className="share-place-button">
-            <Button className="font-awesome__share" onClick={handleShareClick}>
-              <FontAwesomeIcon icon={faShareAlt} size="lg" />
-            </Button>
-          </div>
+          
         </Card>
       </li>
     </React.Fragment>

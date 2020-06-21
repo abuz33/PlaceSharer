@@ -71,9 +71,7 @@
 
 
 .share-place-button{
-  position: absolute;
-  top: 5px;
-  right: 5px;
+  position: relative;
 }
 
 .share-button-container{
@@ -82,14 +80,23 @@
   justify-content: space-between;
 }
 
-.share-button-container button{
-  border: none;
-  background-color: white;
+.share-icon{
+  cursor: pointer;
   
 }
-.share-button-container button::after{
-  cursor: hand;
-}
+
+.title-block{
+  display: flex;
+  justify-content: center;
+ }
+ 
+ .font-awesome__share{
+   position: absolute;
+   right: 1rem;
+   z-index: 3;
+ }
+
+
 
 @media (min-width: 768px) {
   .place-item__image {

@@ -19,15 +19,20 @@
   position: relative;
 }
 .font-awesome__share {
-
-  cursor: hand;
+  color: black;
+  background-color: white;
+  cursor: pointer;
 
 }
 
-.share-place-button{
+.title-block{
+ display: flex;
+ justify-content: center;
+}
+
+.font-awesome__share{
   position: absolute;
-  top: 5px;
-  right: 5px;
+  right: 1rem;
   z-index: 3;
 }
 
@@ -81,15 +86,12 @@
   justify-content: space-between;
 }
 
-.share-button-container button{
-  border: none;
-  background-color: white;
+
+
+.share-icon{
+  cursor: pointer;
   
 }
-.share-button-container button::after{
-  cursor: hand;
-}
-
 
 
 @media (min-width: 768px) {
