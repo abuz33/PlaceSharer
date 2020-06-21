@@ -38,21 +38,21 @@ const PlaceItem = (props) => {
   const showDeleteWarningHandler = () => setShowConfirmModal(true)
 
   const cancelDeleteHandler = () => setShowConfirmModal(false)
+  const closeShowHandler = () => setShowShareModal(false)
+  const { description, image } = props
+  const url = window.document.location.href
 
   const handleShareClick = () => {
     if (navigator.share) {
       navigator.share({
         title: `${props.title}`,
         text: `${props.title} is a great place to visit`,
-        url: '',
+        url: url,
       })
     } else {
       setShowShareModal(true)
     }
   }
-  const closeShowHandler = () => setShowShareModal(false)
-  const { description, image } = props
-  const url = window.document.location.href
 
   const shareOnFacebook = () => {
     window.open(
