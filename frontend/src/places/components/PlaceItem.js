@@ -17,9 +17,6 @@ const PlaceItem = (props) => {
   const auth = useContext(AuthContext)
   const [showMap, setShowMap] = useState(false)
   const [showConfirmModal, setShowConfirmModal] = useState(false)
-  const [showShareModal, setShowShareModal] = useState(false)
-
-
 
   const openMapHandler = () => setShowMap(true)
 
@@ -28,9 +25,6 @@ const PlaceItem = (props) => {
   const showDeleteWarningHandler = () => setShowConfirmModal(true)
 
   const cancelDeleteHandler = () => setShowConfirmModal(false)
-  const closeShowHandler = () => setShowShareModal(false)
-  const { description, image } = props
-  const url = window.document.location.href
 
   const confirmDeleteHandler = async () => {
     setShowConfirmModal(false)
@@ -92,14 +86,13 @@ const PlaceItem = (props) => {
       </Modal>
       <li className="place-item">
         <Card className="place-item__content">
-          
           {isLoading && <LoadingSpinner asOverlay />}
 
           <div className="place-item__image">
             <img src={`${props.image}`} alt={props.title} />
           </div>
           <div className="place-item__info">
-              <h2>{props.title}</h2>
+            <h2>{props.title}</h2>
             <h3>{props.address}</h3>
             <p>{props.description}</p>
           </div>
